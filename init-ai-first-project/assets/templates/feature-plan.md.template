@@ -1,5 +1,6 @@
 # F-NNN [名称] — 实现规划
 
+- 类型：feature | bugfix | hotfix
 - 关联 spec：§[ ]
 - 验收人：[ ]
 - 批准人 / 日期：[ ] / YYYY-MM-DD（AC 冻结后填写）
@@ -63,29 +64,31 @@
 |---|---|---|---|
 | AC-1 | [ ] | [ ] | `[ ]` |
 
-## 5. Git 提交计划
+## 5. Git 提交与工单计划
 
 - 分支：`feat/F-NNN-slug`
 - 提交格式：`<type>(F-NNN): <summary>`（项目已有规范以项目为准）
-- 提交前检查：`[build / test / lint / typecheck 的完整命令]`
+- 代码提交前检查：`[build / test / lint / typecheck 的完整命令]`；纯文档提交：运行文档校验
+- 工单拆分：按 `docs/issue-tracker.md` 拆成 `tickets/NN-<slug>.md`，`tickets.md` 只做地图
 - 提交节点：
 
 | 节点 | 触发条件 | 预期 commit message |
 |---|---|---|
-| C-REQ | 需求进入 plan_map、plan 草稿建立 | `docs(F-NNN): propose feature` |
+| C-REQ | 需求进入 plan-map、plan 草稿建立 | `docs(F-NNN): propose feature` |
 | C-PLAN | plan 批准 | `docs(F-NNN): add plan` |
-| C-TASK | task 建立 | `docs(F-NNN): add tasks` |
-| C-1 | T-1 完成 | `feat(F-NNN): ...` |
-| C-2 | T-2 完成 | `...` |
-| C-DOC | spec / plan_map / status 更新完成 | `docs(F-NNN): ...` |
-| C-ACC | acceptance.md 填写完成 | `docs(F-NNN): add acceptance evidence` |
+| C-TICKETS | 工单拆分批准、`tickets.md` 与工单文件建立 | `docs(F-NNN): add tickets` |
+| C-01 | 工单 01 完成（实现与测试） | `feat(F-NNN): ...` |
+| C-02 | 工单 02 完成（实现与测试） | `...` |
+| C-ACC | `acceptance.md` 按工单填写完成 | `docs(F-NNN): add acceptance evidence` |
+| C-DOC | spec / plan-map / status 更新完成 | `docs(F-NNN): sync spec and plan-map` |
 
-- 验收提交：`acceptance.md` 记录最终 commit 或 commit range。
+- 验收提交：`acceptance.md` 记录每个工单的验收 commit 或 commit range。
 
 ## 6. 文档同步
 
 - [ ] 更新 `docs/spec.md` §[ ]
 - [ ] 需要 ADR：是 / 否；如果是，编号 [NNNN]
+- [ ] 更新 `tickets.md` 工单地图（所有工单状态与提交）
 - [ ] 更新 `docs/status.md`
 - [ ] 产生文档 commit：`docs(F-NNN): ...`
 

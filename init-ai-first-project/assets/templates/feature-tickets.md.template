@@ -1,0 +1,24 @@
+# F-NNN [名称] — 工单地图
+
+> 本文件是工单索引。工单正文、状态和验收标准在 `tickets/NN-<slug>.md`；建本文件时同时创建 `tickets/`。
+> 工单规则见 `docs/issue-tracker.md`；只做阻塞项全部 `accepted` 的 frontier 工单。
+
+## 工单
+
+| 工单 | 标题 | 状态 | 阻塞 | 覆盖 AC | 提交 | 文件 |
+|---|---|---|---|---|---|---|
+| 01 | [标题] | ready-for-agent | - | AC-1 | - | [01-slug.md](tickets/01-slug.md) |
+| 02 | [标题] | blocked | 01 | AC-2 | - | [02-slug.md](tickets/02-slug.md) |
+
+> 把 `slug` 替换为实际 kebab slug；每个链接必须指向真实存在的工单文件。
+
+## 依赖图
+
+```text
+01 → 02
+```
+
+## 当前 Frontier
+
+- 可开始：01
+- 等待中：02（阻塞于 01）

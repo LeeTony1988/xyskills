@@ -1,69 +1,64 @@
 # 文档系统
 
-> 面向人和 agent 的文档地图。Agent 的常驻规则在根目录 `AGENTS.md`。
+> 面向人和 agent 的文档地图。常驻规则在根目录 `AGENTS.md`；feature 工作方式见 `docs/features/README.md`，工单规则见 `docs/issue-tracker.md`。
 
 ## 文件所有权
 
 | 文件/目录 | 唯一职责 | 更新者 | 何时更新 |
 |---|---|---|---|
-| `AGENTS.md` | 常驻路由、硬约束、DoD | 维护者 | 路由、约束或 DoD 变化 |
+| `AGENTS.md` | 常驻路由、文件索引、硬约束、边界 | 维护者 | 路由、约束或边界变化 |
 | `docs/spec.md` | 系统当前事实 | 实现者 | 行为、结构、命令、架构变化 |
-| `docs/plan_map.md` | 项目演进账本：基线、队列、依赖、归档、演进日志 | 实现者 | 新需求、状态/依赖变化、验收、归档 |
+| `docs/plan-map.md` | 项目演进账本：基线、队列、依赖、归档、演进日志 | 实现者 | 新需求、状态/依赖变化、验收、归档 |
 | `docs/status.md` | 当前焦点快照 | 实现者 | 阶段变化 |
-| `docs/adr/` | 决策理由 | 决策人 | 架构决策发生时 |
-| `docs/features/F-NNN-slug/` | 单个 feature 的 plan/task/acceptance | 实现者 | feature 生命周期内 |
+| `docs/features/README.md` | feature 目录规则：结构、生命周期、工单地图、按工单验收、门禁、命名、提交、DoD、归档、bug/hotfix | 维护者 | feature 流程变化 |
+| `docs/features/F-NNN-slug/` | 单个 feature 的 plan / tickets 工单地图 / acceptance 按工单验收 | 实现者 | feature 生命周期内 |
+| `docs/features/F-NNN-slug/tickets/` | 单个工单的正文、阻塞边与状态 | 实现者 | 工单生命周期内 |
+| `docs/issue-tracker.md` | 工单存放位置、编号、状态与生成规则 | 维护者 | 工单流程变化 |
 | `docs/archive/features/` | 已验收 feature 的完整记录 | 实现者 | 归档时 |
+| `docs/adr/` | 决策理由 | 决策人 | 架构决策发生时 |
 | `docs/templates/` | 新文档模板 | 维护者 | 模板演进时 |
 
-## 演进文档（plan_map）
+## 演进文档（plan-map）
 
-`plan_map.md` 不是一次性路线图，而是项目演进账本，随项目情况持续更新：
+`plan-map.md` 不是一次性路线图，而是项目演进账本，随项目情况持续更新：
 
 - **当前基线**：每验收一个 feature，追加一行能力/模块，并链接 spec 章节。
 - **演进队列**：新需求插入；计划、状态、依赖、优先级变化时更新。
 - **排序与阻塞**：依赖或优先级变化时重排，并说明原因。
 - **已归档**：验收通过后追加；只追加，不修改历史。
-- **演进日志**：只记路线图级变化（新增、重排、拆分/合并、取代、归档），每条记录带 commit（初始化未提交时写 `working tree`）；不记任务级进度。
+- **演进日志**：只记路线图级变化（新增、重排、拆分/合并、取代、归档），每条记录带 commit（初始化未提交时写 `working tree`）；不记工单级进度。
 
 每次更新刷新顶部 `最后更新`。历史行只追加，不改写。
 
-## 需求生命周期
+## Feature 工作
 
-```text
-提出需求 → plan（含 AC）→ 人批准 → task → 实现/测试 → 验收证据 → 人验收 → 同步 spec/ADR → 归档 → 更新 plan_map/status
-```
+完整规则见 `docs/features/README.md`，工单规则见 `docs/issue-tracker.md`。本文件只记文档边界：
 
-1. **提出**：在 `plan_map.md` 的演进队列加一行，状态 `proposed`，并在演进日志记录新增；从 `templates/plan.md` 建 `features/F-NNN-slug/plan.md`，写清问题、用户故事、AC、非目标；提交需求（`docs(F-NNN): propose feature`）。
-2. **计划**：补方案、受影响模块、风险、测试计划、Git 提交计划；AC 必须可测。人批准后状态改 `planned`，AC 冻结，提交 plan（`docs(F-NNN): add plan`）。
-3. **任务**：从 `templates/task.md` 建 `task.md`；每个任务有完成条件、验证命令和提交记录。状态改 `in-progress`，提交 task（`docs(F-NNN): add tasks`）。
-4. **实现**：代码与测试同步；每个产生改动的 `T-*` 完成即 commit，commit hash 写回 `task.md`；阶段变化时更新 `status.md`。
-5. **验收**：从 `templates/acceptance.md` 建 `acceptance.md`；每条 AC 填证据（命令 + 结果，或测试文件:行）；记录验收 commit 或 commit range；状态 `verifying`。
-6. **通过**：验收人签字，状态 `accepted`；更新 `spec.md` 与 ADR，把新能力补进 `plan_map.md` 的当前基线并在演进日志记录验收，产生最终文档 commit。
-7. **归档**：整个 feature 目录移入 `archive/features/`；`plan_map.md` 改为归档行并记录最终 commit，演进日志记录归档；`status.md` 复位；提交归档 commit（`docs(F-NNN): archive feature`）。
+- `plan-map.md` 负责每个 feature 的一行摘要、状态与归档索引；全文与证据在 feature 目录。
+- `status.md` 的 `Active` 必须与 `plan-map.md` 一致；无活动 feature 时为 `Idle`。
+- `tickets.md` 是工单地图；工单正文在 `tickets/`，验收在 `acceptance.md` 按工单记录。
 
-门禁：AC 未经人确认不写 task；没有可复现证据不标 `verifying`；每个产生改动的 `T-*` 有 commit；spec 未同步不归档；工作区不干净不交接。
+## 文档提交规则
 
-## Git 提交规则
+完整 Git 规则见 `docs/spec.md` §5.1；feature 的提交节点与证据要求见 `docs/features/README.md`。
 
-完整规则见 `docs/spec.md` §5.1。文档侧必须遵守：
-
-- 每个产生改动的 `T-*` 在 `task.md` 记录 commit hash；没有 commit 不能勾选。
-- `acceptance.md` 记录验收 commit 或 commit range。
-- `plan_map` 演进日志记录对应 commit，归档行记录最终 commit。
-- 代码与相关文档在同一个 commit/PR；验收前产生最终文档 commit。
-- 交接前 `git status` 干净。
+- 每个产生改动的工单在 `tickets.md` 记录 commit hash；`acceptance.md` 按工单记录验收 commit 或 commit range。
+- 代码与相关文档在同一个 commit / PR 中更新。
+- 纯文档提交只跑文档校验（路径、链接、占位符、状态值），不跑全量测试；代码与文档混合的提交按代码提交处理。
+- 验收前必须产生包含 `docs/spec.md`、`docs/plan-map.md`、`docs/status.md` 更新的文档 commit。
+- 交接前 `git status` 必须干净。
 
 ## 命名
 
-- Feature：`F-001` 起，目录 `F-001-<kebab-slug>`；ID 与目录名创建后不变。
-- Commit message 的 scope 使用 `F-NNN`，与 feature ID 一致。
+- 文档文件名：`AGENTS.md` 大写；其余用小写 kebab，与项目现有约定一致。推荐 `spec.md`、`plan-map.md`、`status.md`。
 - ADR：`NNNN-<kebab-slug>.md`，四位编号；接受后不修改，只能被新 ADR 取代。
-- 状态：`proposed | planned | in-progress | verifying | accepted`；归档区不写状态。
+- Feature ID、目录名与 commit scope：见 `docs/features/README.md`。
+- 工单 ID、文件名与状态：见 `docs/issue-tracker.md`。
 
 ## 写作规则
 
 - 一条事实只写一处；其他位置用指针。
 - 命令必须完整、可复制、带 cwd 与前置条件，并标注验证状态。
-- 计划写“为什么”和“做什么”，任务写“怎么验证完成”。
+- 计划写“为什么”和“做什么”，工单写“怎么验证完成”。
 - 归档只移动，不删除、不改写。
 - 文档与代码在同一个 commit / PR 中更新。

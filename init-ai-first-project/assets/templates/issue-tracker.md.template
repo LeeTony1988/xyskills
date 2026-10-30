@@ -1,0 +1,32 @@
+# Issue Tracker
+
+> 本项目的工单使用本地 Markdown 保存，按 feature 隔离。
+
+## 存放位置
+
+- 工单目录：`docs/features/F-NNN-slug/tickets/`
+- 文件名：`NN-<kebab-slug>.md`，`NN` 从 `01` 起，按依赖顺序编号（阻塞项在前）。
+- 一个工单一个文件；禁止把所有工单写进一个文件。
+- 工单是 feature 文档的一部分，随 feature 提交与归档；不要把它加入 `.gitignore`。
+
+## 状态
+
+`blocked | ready-for-agent | in-progress | verifying | accepted`
+
+| 状态 | 含义 | 进入条件 |
+|---|---|---|
+| `blocked` | 还不能开始 | 至少一个阻塞工单未 `accepted` |
+| `ready-for-agent` | 可以开始 | 所有阻塞工单已 `accepted`（frontier） |
+| `in-progress` | 正在实现 | 已领取并开始改代码 |
+| `verifying` | 实现完成，待验收 | 工单 AC 已完成，测试通过，commit 已记录 |
+| `accepted` | 已验收 | `acceptance.md` 有该工单的证据与验收结论 |
+
+工单文件中的 `**Status:**` 是状态的唯一来源；`tickets.md` 的状态列必须与其保持一致。
+
+## 生成规则
+
+- 工单由拆分时生成，每张工单至少包含：要构建的行为、阻塞边、状态、验收标准。
+- 工单模板与拆分方式不在本文档定义；无论手工拆分还是使用工具，都必须遵守上面的目录、编号与状态约束。
+- 工单描述使用项目术语，遵循相关 ADR。
+- 不写具体文件路径或代码片段；如果原型片段更能说明状态机、schema 或类型，可以内联并注明来自原型。
+- 每条工单 AC 必须能追溯到 `plan.md` 的 AC；在 `tickets.md` 的“覆盖 AC”列标注。
