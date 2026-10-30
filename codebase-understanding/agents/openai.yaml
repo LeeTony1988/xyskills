@@ -1,0 +1,3 @@
+interface:
+  display_name: "Codebase Understanding"
+  short_description: "Understand a codebase like a code auditor"
