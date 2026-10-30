@@ -1,0 +1,32 @@
+# F-NNN [名称] — Task Checklist
+
+> 每个任务是一个可验证单元。每个产生文件改动的 `T-*` 完成必须产生一个 commit；没有 commit 不能勾选。任务必须覆盖所有 AC。
+
+## 任务
+
+- [ ] **T-1 [任务名]**
+  - 文件：`[ ]`
+  - 完成条件：[可观察的结果]
+  - 验证：`[完整命令]`
+  - 提交：`<sha>`（完成后填写；消息 `feat(F-NNN): ...`）
+  - 依赖：无
+- [ ] **T-2 [任务名]**
+  - 文件：`[ ]`
+  - 完成条件：[ ]
+  - 验证：`[ ]`
+  - 提交：`<sha>`（完成后填写；消息 `...`）
+  - 依赖：T-1
+
+## 收尾任务（固定）
+
+- [ ] **T-DOC 同步 spec 与 ADR**
+  - 完成条件：`docs/spec.md` 已反映本次变更；ADR 已记录或确认不需要
+  - 验证：人工审阅 `git diff docs/`
+  - 提交：`<sha>`（消息 `docs(F-NNN): sync spec and ADR`）
+- [ ] **T-ACC 填写验收证据**
+  - 完成条件：`acceptance.md` 每条 AC 有可复现证据
+  - 验证：`[测试命令]` 全部通过
+  - 提交：`<sha>`（消息 `docs(F-NNN): add acceptance evidence`）
+- [ ] **T-GIT 检查提交完整**
+  - 完成条件：每个产生改动的 `T-*` 都有 commit；`git status` 干净；没有把多个 feature 混在一起
+  - 验证：`git log --oneline`、`git status --short`

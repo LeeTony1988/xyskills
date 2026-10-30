@@ -1,0 +1,10 @@
+# Status
+
+> 当前焦点快照，阶段变化时更新。历史见 `docs/plan_map.md`。
+
+- Updated: YYYY-MM-DD
+- Active: Idle
+- Next: 从 `docs/plan_map.md` 选择一个 `proposed` / `planned` feature
+- Blockers: 无
+- Last verification: 尚未运行（命令 + 结果）
+- Last commit: 尚未提交（`<sha>`）

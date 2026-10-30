@@ -1,0 +1,59 @@
+# AGENTS.md
+
+> 常驻路由：只放每次会话都需要的约束与指针。事实细节在 `docs/spec.md`；文档规则在 `docs/README.md`。
+
+## 项目
+
+[项目名] — [项目是什么, 主要解决什么问题，一句话]。
+
+## 阅读顺序
+
+1. `docs/spec.md` — 系统当前事实
+2. `docs/status.md` — 当前焦点与下一步
+3. `docs/plan_map.md` — 项目演进账本（基线、队列、归档）
+4. 当前 feature 的 `plan.md` / `task.md`
+5. 涉及架构取舍时读 `docs/adr/`；需要改文档流程时读 `docs/README.md`
+
+## 硬约束
+
+- 技术栈与版本锁定见 `docs/spec.md` §2；不自行升级版本或新增依赖。
+- 目录结构见 `docs/spec.md` §3；不新增顶层目录，不把源码、测试、文档混放。
+- Git 工作流见 `docs/spec.md` §5.1；每个功能改动必须有 commit，提交信息引用 `F-NNN`；没有 commit 的改动不算完成。
+- 文档与代码在同一个 commit / PR 中更新；spec 未同步不算完成。
+- 未经验证的命令不得写入文档。
+
+## 文件路由
+
+| 任务 | 先读 | 更新 |
+|---|---|---|
+| 新需求 | `docs/spec.md`、`docs/plan_map.md` | `plan_map.md`、`docs/features/F-NNN-slug/plan.md` |
+| 实现功能 | `plan.md`、`task.md`、相关源码 | `task.md`、`docs/status.md` |
+| 修 bug | spec 的 Architecture / Testing、相关源码 | 必要时 spec；对应 feature 文档 |
+| 架构决策 | `docs/adr/`、spec Architecture | 新 ADR、spec 链接 |
+| 发布 | spec Commands、`status.md` | `status.md` |
+| 维护文档 | `docs/README.md` | 对应文件 |
+
+## 文档协议
+
+完整生命周期见 `docs/README.md`。每次会话必须遵守的门禁：
+
+- AC 未经人确认不写 task；没有可复现证据不标 `verifying`；每个产生改动的 `T-*` 有 commit；spec 未同步不归档。
+- 需求、计划、任务、验收、归档的变更与代码在同一个 commit / PR 中完成。
+- 新增 feature 从 `docs/templates/plan.md` 开始，ID 使用 `F-NNN`，目录名创建后不改。
+
+## 完成定义（DoD）
+
+- `docs/spec.md` Commands 中的 build、test、lint、typecheck 全部通过。
+- 新增或修改的行为有对应测试。
+- `docs/spec.md` 已反映当前事实；相关 ADR 已记录。
+- `task.md` 全部勾选；每个产生改动的 `T-*` 有 commit 记录；`acceptance.md` 每条 AC 有证据。
+- `status.md` 与 `plan_map.md` 已更新；`git status` 干净。
+
+## 边界
+
+- **Always**：
+  - [例：修改公共接口前先读相关 ADR]
+- **Ask First**：
+  - [例：新增依赖、修改目录结构、变更数据模型]
+- **Never**：
+  - [例：提交密钥、跳过测试、直接改已接受的 ADR]
