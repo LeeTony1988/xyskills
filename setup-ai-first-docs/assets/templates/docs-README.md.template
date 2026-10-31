@@ -5,7 +5,7 @@
 ## 1. 目录地图
 
 ```text
-AGENTS.md                          # 常驻路由：会话开始、文件索引、硬约束、边界
+AGENTS.md                          # 常驻路由：项目身份、文件索引、硬约束、边界
 docs/
 ├── README.md                      # 本文件：文档地图、所有权、生命周期、更新规则
 ├── spec.md                        # 项目规格：目标、技术栈、结构、命令、风格、测试、边界
@@ -31,12 +31,12 @@ docs/
 
 | 路径 | 职责 | 主要读者 | 何时更新 |
 |---|---|---|---|
-| `AGENTS.md` | 路由与会话规则 | agent | 路由、硬约束、边界变化时 |
+| `AGENTS.md` | 路由与项目规则 | agent | 路由、硬约束、边界变化时 |
 | `docs/README.md` | 文档系统规则 | 人 + agent | 文档结构或流程变化时 |
 | `docs/spec.md` | 项目规格：目标、技术栈、结构、命令、代码风格、测试策略、边界 | 人 + agent | 目标、技术栈、目录、命令、风格、测试、边界变化时 |
 | `docs/HLD.md` | 当前系统结构 | 人 + agent | 模块、接口边界、数据架构变化时 |
 | `docs/roadmap.md` | 演进时间线 | 人 | 功能开工、状态变化、归档时 |
-| `docs/features/status.md` | 当前功能看板 | 人 + agent | 每次会话开始前 / 状态变化时 |
+| `docs/features/status.md` | 当前功能看板 | 人 + agent | 功能状态变化时 |
 | `docs/features/feature-<slug>/plan.md` | 单功能决策（图优先，人读） | 人（批准） | 功能生命周期内；批准后 AC 冻结，方案变更需重新批准 |
 | `.scratch/<feature>-spec.md` | 执行规格 | agent | 实现期间，随 plan 同步 |
 | `.scratch/tickets/` | 工单（格式自由） | agent | 实现期间 |
@@ -48,7 +48,7 @@ docs/
 
 | 层 | 文件 | 回答 | 入库 |
 |---|---|---|---|
-| 路由 | `AGENTS.md` | 每次会话先读什么、什么不能做 | 是 |
+| 路由 | `AGENTS.md` | 项目身份、文件索引、硬约束与边界 | 是 |
 | 事实 | `spec.md`、`HLD.md` | 系统现在是什么 | 是 |
 | 演进 | `roadmap.md`、`features/status.md` | 做到哪、接下来做什么 | 是 |
 | 执行 | `plan.md`、`.scratch/` | 这个功能怎么做、下一步做什么 | plan 是，scratch 否 |
@@ -168,7 +168,7 @@ docs/features/*/.scratch/
 ## 10. 自检
 
 - [ ] 每个事实只有一个所有者，其他位置是指针。
-- [ ] `AGENTS.md` 每个具体路径都存在，行数 ≤ 120。
+- [ ] `AGENTS.md` 每个具体路径都存在，行数 40–80（硬上限 120）。
 - [ ] `docs/spec.md` 九个部分齐全，`Commands` 每行都是完整可执行命令。
 - [ ] roadmap 每行四列，状态只能是 `in-progress | done | archived`，且与 status 一致。
 - [ ] 每个 feature 目录都在 status 中，`plan.md` 有总览/模块依赖图、核心接口与数据对象章节。

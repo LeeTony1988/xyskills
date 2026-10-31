@@ -227,8 +227,10 @@ def check_agents(report: Report) -> None:
     lines = len(text.splitlines())
     if lines > 120:
         report.error(f"AGENTS.md: {lines} lines (hard limit 120); move facts to spec/HLD and rules to docs/README.md")
-    elif lines > 100:
-        report.warn(f"AGENTS.md: {lines} lines (target 40-100)")
+    elif lines > 80:
+        report.warn(f"AGENTS.md: {lines} lines (target 40-80); move details to spec/HLD and docs/README.md")
+    elif lines < 40:
+        report.warn(f"AGENTS.md: {lines} lines (target 40-80); add project identity, file index and boundaries")
     for pointer in [
         "docs/README.md",
         "docs/spec.md",

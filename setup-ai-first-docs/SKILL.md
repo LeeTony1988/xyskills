@@ -17,7 +17,7 @@ description: 为 AI-first / AI-native 项目搭建或重整文档系统：AGENTS
 
 | 层 | 文件 | 回答什么 | 入库 |
 |---|---|---|---|
-| 路由 | `AGENTS.md` | 每次会话必须遵守什么、按什么顺序读哪些文件 | 是 |
+| 路由 | `AGENTS.md` | 项目身份、文件索引、硬约束与边界 | 是 |
 | 文档规则 | `docs/README.md` | 文档地图、所有权、生命周期、更新触发器 | 是 |
 | 系统事实 | `docs/spec.md` | 项目是什么、技术栈、结构、命令、代码风格、测试策略、边界、成功标准 | 是 |
 | 系统结构 | `docs/HLD.md` | 系统由哪些模块组成、边界与关键机制 | 是 |
@@ -93,7 +93,7 @@ python <skill-dir>/scripts/scaffold_docs.py <project-root> --project-name "<项�
 3. **`docs/roadmap.md`**：每个**已开工或已完成**的功能一行（`in-progress | done | archived`），固定四列 `时间 | 文件索引 | 简介 | 状态`。`planned` 只登记在 status，plan 批准后再进 roadmap。时间用 ISO 日期，文件索引指向 `features/feature-<slug>/plan.md`。没有真实功能就留空表，不编造。
 4. **`docs/features/status.md`**：覆盖所有 feature 目录与状态（含 `planned`）；roadmap 中出现的功能必须在此表且状态一致；没有活动 feature 时写 `Idle`。`plan` 列链接到 `plan.md`。
 5. **`docs/README.md`**：文档地图（每个文件/目录的职责、读者、更新时机）、四层模型、唯一事实源规则、feature 生命周期与工单约束、`.scratch` 规则、更新触发器、命名、写作规则、新 feature checklist。
-6. **`AGENTS.md`**：最后写。只放项目身份、会话开始顺序、文件索引、硬约束、`Always / Ask First / Never`。目标 40–100 行，硬上限 120 行；每个具体路径必须真实存在。
+6. **`AGENTS.md`**：最后写。只放项目身份、文件索引（路径 + 内容）、硬约束、`Always / Ask First / Never`。目标 40–80 行，硬上限 120 行；每个具体路径必须真实存在。
 7. **`docs/templates/`**：确认 8 个模板齐全：`AGENTS.md`、`docs-README.md`、`HLD.md`、`spec.md`、`roadmap.md`、`features-status.md`、`plan.md`、`feature-spec.md`。模板里的 `{{...}}` 占位符保留，供后续复制时替换。
 
 已有文件处理：

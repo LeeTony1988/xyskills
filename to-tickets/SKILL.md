@@ -12,7 +12,7 @@ The issue tracker and triage label vocabulary should have been provided to you.
 
 ## Issue Tracker
 
-**Issue tracker**: Issues for this repo live as markdown files. **One file per ticket**. The storage path for tickets follows the project's conventions, see `docs/README.md`.
+**Issue tracker**: Issues for this repo live as markdown files. **One file per ticket**. The storage path is `docs/features/feature-<slug>/.scratch/tickets/` (see `docs/README.md`).
 
 ## Process
 
@@ -63,7 +63,7 @@ Iterate until the user approves the breakdown.
 
 Publish the approved tickets. 
 
-- **Local files** → write one file per ticket under `<feature-dir>/.scratch/tickets/<NN>-<slug>.md`, numbered from `01` in dependency order (blockers first). Each file's "Blocked by" lists the numbers/titles it depends on. Use the per-ticket file template below: one ticket per file, never a single combined file.
+- **Local files** → write one file per ticket under `docs/features/feature-<slug>/.scratch/tickets/<NN>-<ticket-slug>.md`, numbered from `01` in dependency order (blockers first). Each file's "Blocked by" lists the numbers/titles it depends on. Use the per-ticket file template below: one ticket per file, never a single combined file.
 
 Work the **frontier**: any ticket whose blockers are all done. For a purely linear chain that means top to bottom.
 

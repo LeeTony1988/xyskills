@@ -8,16 +8,16 @@
 
 ## 文件索引
 
-| 路径 | 内容 | 何时读 |
-|---|---|---|
-| `docs/README.md` | 文档地图、所有权、生命周期、更新规则 | 第一次进入项目、维护文档 |
-| `docs/spec.md` | 项目规格：目标、技术栈、结构、命令、代码风格、测试策略、边界 | 实现或修改任何功能前 |
-| `docs/HLD.md` | 概要设计：模块、边界、关键流程、数据架构 | 改动架构、跨模块功能前 |
-| `docs/roadmap.md` | 演进账本：时间、功能/文档索引、简介、状态 | 规划、汇报、追溯时 |
-| `docs/features/status.md` | 功能地图：进行中 / 已完成 / 已归档 | 每次会话开始 |
-| `docs/features/feature-<slug>/plan.md` | 单功能方案（人已确认，入 Git） | 实现该功能前 |
-| `docs/features/feature-<slug>/.scratch/` | 本地执行规格与工单（不入 Git，可删除） | 实现该功能时 |
-| `docs/templates/` | 新文档模板 | 新建文档时 |
+| 路径 | 内容 |
+|---|---|
+| `docs/README.md` | 文档地图、所有权、生命周期、更新规则 |
+| `docs/spec.md` | 项目规格：目标、技术栈、结构、命令、代码风格、测试策略、边界 |
+| `docs/HLD.md` | 概要设计：模块、边界、关键流程、数据架构 |
+| `docs/roadmap.md` | 演进账本：时间、功能/文档索引、简介、状态 |
+| `docs/features/status.md` | 功能地图：进行中 / 已完成 / 已归档 |
+| `docs/features/feature-<slug>/plan.md` | 单功能方案（人已确认，入 Git） |
+| `docs/features/feature-<slug>/.scratch/` | 本地执行规格与工单（不入 Git，可删除） |
+| `docs/templates/` | 新文档模板 |
 
 ## 硬约束
 
