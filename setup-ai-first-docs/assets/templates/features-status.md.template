@@ -1,0 +1,18 @@
+# Feature Status — 功能地图
+
+> 当前功能看板：哪些在做、哪些已完成、哪些已归档。`roadmap.md` 记录同一功能的时间线，两处状态必须一致。
+> 状态：`planned | in-progress | done | archived`。`planned` 可以只在本表；进入实现后同步到 roadmap。当前焦点：`Idle`。
+
+## 功能地图
+
+| Feature | 简介 | 状态 | plan | 负责人 | 下一步 | 更新时间 |
+|---|---|---|---|---|---|---|
+
+## 维护规则
+
+- 每个 `docs/features/feature-<slug>/` 目录必须在本表出现，且只出现一次。
+- `Feature` 写目录名；`plan` 用相对链接 `feature-<slug>/plan.md`。
+- 状态与 `roadmap.md` 必须一致；状态变化时同时更新两处。
+- `下一步` 写具体动作（例如“执行当前工单”“等待 plan 批准”），不写“继续开发”。
+- 没有活动 feature 时，当前焦点写 `Idle`，表可以只有表头。
+- `archived` 功能保留在表中，不删除；需要压缩时移入文末“已归档索引”，但状态仍为 `archived`。

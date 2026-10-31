@@ -1,0 +1,177 @@
+# 文档系统
+
+> 本文件是 {{PROJECT_NAME}} 文档系统的地图与规则。常驻路由在根目录 `AGENTS.md`；系统事实在 `spec.md` 与 `HLD.md`。
+
+## 1. 目录地图
+
+```text
+AGENTS.md                          # 常驻路由：会话开始、文件索引、硬约束、边界
+docs/
+├── README.md                      # 本文件：文档地图、所有权、生命周期、更新规则
+├── spec.md                        # 项目规格：目标、技术栈、结构、命令、风格、测试、边界
+├── HLD.md                         # 概要设计：模块、边界、关键流程、数据架构
+├── roadmap.md                     # 演进账本：时间、文件索引、简介、状态
+├── templates/                     # 可复制模板
+│   ├── AGENTS.md
+│   ├── docs-README.md
+│   ├── HLD.md
+│   ├── spec.md
+│   ├── roadmap.md
+│   ├── features-status.md
+│   ├── plan.md
+│   └── feature-spec.md
+└── features/
+    ├── status.md                  # 功能地图：进行中 / 已完成 / 已归档
+    └── feature-<slug>/
+        ├── plan.md                # 单功能决策（人读，入 Git）
+        └── .scratch/              # 本地执行层（不入 Git，可删除）
+            ├── feature-<slug>-spec.md
+            └── tickets/           # 工单（格式由用户决定）
+```
+
+| 路径 | 职责 | 主要读者 | 何时更新 |
+|---|---|---|---|
+| `AGENTS.md` | 路由与会话规则 | agent | 路由、硬约束、边界变化时 |
+| `docs/README.md` | 文档系统规则 | 人 + agent | 文档结构或流程变化时 |
+| `docs/spec.md` | 项目规格：目标、技术栈、结构、命令、代码风格、测试策略、边界 | 人 + agent | 目标、技术栈、目录、命令、风格、测试、边界变化时 |
+| `docs/HLD.md` | 当前系统结构 | 人 + agent | 模块、接口边界、数据架构变化时 |
+| `docs/roadmap.md` | 演进时间线 | 人 | 功能开工、状态变化、归档时 |
+| `docs/features/status.md` | 当前功能看板 | 人 + agent | 每次会话开始前 / 状态变化时 |
+| `docs/features/feature-<slug>/plan.md` | 单功能决策（图优先，人读） | 人（批准） | 功能生命周期内；批准后 AC 冻结，方案变更需重新批准 |
+| `.scratch/<feature>-spec.md` | 执行规格 | agent | 实现期间，随 plan 同步 |
+| `.scratch/tickets/` | 工单（格式自由） | agent | 实现期间 |
+| `docs/templates/` | 模板 | 人 + agent | 模板演进时 |
+
+模板中的双花括号占位符是复制时的替换标记；创建真实文档后必须全部替换。
+
+## 2. 四层模型
+
+| 层 | 文件 | 回答 | 入库 |
+|---|---|---|---|
+| 路由 | `AGENTS.md` | 每次会话先读什么、什么不能做 | 是 |
+| 事实 | `spec.md`、`HLD.md` | 系统现在是什么 | 是 |
+| 演进 | `roadmap.md`、`features/status.md` | 做到哪、接下来做什么 | 是 |
+| 执行 | `plan.md`、`.scratch/` | 这个功能怎么做、下一步做什么 | plan 是，scratch 否 |
+
+`plan.md` 是人与 agent 的交接面：人批准它，agent 依据它生成 `.scratch/` 规格；工单由用户自由规划。
+
+## 3. 唯一事实源
+
+| 信息 | 所有者 |
+|---|---|
+| 项目身份、文件索引、硬约束、边界 | `AGENTS.md` |
+| 文档规则、生命周期、更新触发器 | 本文件 |
+| 项目规格：目标、技术栈、目录结构、具体命令、代码风格、测试策略、边界、成功标准、开放问题 | `docs/spec.md` |
+| 模块、依赖方向、关键流程、数据架构、接口边界 | `docs/HLD.md` |
+| 功能时间线（时间、索引、简介、状态） | `docs/roadmap.md` |
+| 当前功能状态与下一步 | `docs/features/status.md` |
+| 单功能决策、接口、数据对象、验收标准 | `plan.md` |
+| 执行规格、工单、证据 | `.scratch/`（本地） |
+
+规则：
+
+- 同一事实只写一处；其他位置用 `路径 §章节` 指针。
+- committed 文档不链接 `.scratch/` 内部文件。
+- 发现两处冲突：先确定所有者，再把另一处改成指针；冲突未解决前写进 Open Questions。
+
+## 4. Feature 生命周期
+
+| 状态 | 含义 | 进入条件 | 退出门禁 |
+|---|---|---|---|
+| `planned` | 方案已记录，未开工 | 需求确认、`plan.md` 草稿、status 已登记 | 人批准 plan，验收标准冻结 |
+| `in-progress` | 实现中 | plan 已批准、工单规划已确认、roadmap 已加行 | 实现完成，验收/代码提交/文档更新三张独立工单完成 |
+| `done` | 已验收 | 验收证据齐全，spec/HLD 已同步 | 归档评审通过 |
+| `archived` | 已归档 | 功能不再改动 | — |
+
+- 没有批准 plan，不填 feature spec（骨架可先存在）、不规划工单、不改代码。
+- 没有验收证据、代码提交记录、文档更新记录，不标 `done`；spec/HLD 未同步，不归档。
+- Bug/hotfix 走同一流程，`plan.md` 顶部标类型。
+
+### 4.1 Feature 工单约束
+
+每个 feature 的 `.scratch/tickets/` 至少包含三张**独立**工单，不得合并：
+
+| 工单 | 只负责 | 不包含 |
+|---|---|---|
+| 验收工单 | 按 `plan.md` 的 AC 执行验收，记录证据与结论 | 实现代码、提交代码、更新长期文档 |
+| 代码提交工单 | 将本 feature 的代码改动提交到代码仓库，记录 commit | 文档更新 |
+| 文档更新工单 | 同步 `spec.md` / `HLD.md` / `roadmap.md` / `status.md` / `plan.md`，并提交文档 | 代码改动 |
+
+- 实现工单由用户自由规划：数量、命名、格式、状态字段都不限；本 skill 不提供工单模板。
+- 实现工单只改代码，不做最终提交；最终代码提交统一由代码提交工单完成。长期文档改动统一由文档更新工单完成。
+- 推荐顺序：实现 → 验收 → 代码提交 → 文档更新；依赖可按项目调整，但三张收尾工单必须独立。
+- 多代码仓库时，每个仓库一张代码提交工单。
+
+## 5. `.scratch/` 规则
+
+`.scratch/` 是 AI-native 的本地工作区，已被 `.gitignore` 排除：
+
+```gitignore
+docs/features/*/.scratch/
+```
+
+- **可丢弃**：删除后，仅凭 `plan.md` + `spec.md` + `HLD.md` 应能重建执行计划。
+- **非决策地**：新决策先回写 `plan.md` 并确认；不得只留在 scratch。
+- **不提交**：提交前用 `git status` 和 `git check-ignore` 确认。
+- **不互链**：committed 文档只描述“本地工作区”，不链接内部文件。
+- **不放密钥**：token、密码、真实用户数据任何文档都不写。
+
+## 6. 更新触发器
+
+| 事件 | 必须更新 |
+|---|---|
+| 新功能 | status 加行、建 `plan.md`；此时不进 roadmap |
+| plan 批准 | plan 批准记录、status → `in-progress`、roadmap 加行（`in-progress`） |
+| 工单进展 | 按用户规划更新；验收、代码提交、文档更新三张独立工单完成时更新 status |
+| 验收通过 | `spec.md`（项目级目标/成功标准；功能细节回写 `plan.md`）、`HLD.md`（结构变化）、roadmap/status → `done` |
+| 归档 | roadmap/status → `archived`；目录冻结 |
+| 项目级目标/范围变化 | `spec.md` 的 `Objective` / `Success Criteria`；功能细节回写 `plan.md` |
+| 结构/接口边界变化 | `HLD.md` 对应章节与变更记录 |
+| 命令/环境变化 | `spec.md` 的 `Commands`，重新验证并更新 `Verified` 状态 |
+| 文档规则变化 | 本文件；必要时 `AGENTS.md` 指针 |
+
+每次更新刷新文件顶部日期；历史只追加，不改写。
+
+## 7. 命名与状态
+
+- Feature 目录：`feature-<kebab-slug>`，slug 2–5 个英文词，创建后不变。
+- Feature spec：`.scratch/feature-<slug>-spec.md`，与目录同名。
+- 工单：统一放 `.scratch/tickets/`；格式、命名、数量由用户决定；至少三张独立工单（验收 / 代码提交 / 文档更新）。
+- 日期：`YYYY-MM-DD`。
+- Feature 状态：`planned | in-progress | done | archived`。
+- Roadmap 状态：`in-progress | done | archived`；`planned` 只出现在 status。
+- 模板文件与目标文件同名，放 `docs/templates/`。
+
+## 8. 写作规则
+
+- **结论先行**：每节第一句写结论，再写理由与细节。
+- **指针代替复制**：项目约束引用 `spec.md` 章节，结构引用 `HLD.md` 章节。
+- **编号稳定**：feature spec 的行为规格 `FR-001`、验收标准 `AC-1`；项目 spec 的 `Success Criteria` 用可测 checklist；编号只增不改，删除后不复用。
+- **可验收**：每条规格能回答“怎么证明”；用 Given/When/Then、表格或 checklist。
+- **命令可复制**：写全 cwd、前置条件、期望结果；标注 `Verified` 或 `Unverified`。
+- **接口到符号级**：写清 SDK/依赖、模块、函数/类/端点、输入输出与错误。
+- **数据对象写全生命周期**：结构、所有者、创建/更新/删除、存储、一致性、迁移。
+- **plan 图优先**：模块依赖、机制时序、关键流程、数据对象关系用 Mermaid 图；只画核心模块（3–7 个）；图太复杂时改用顺序分点文字；完整接口、字段、错误码放 `.scratch`。
+- **plan 给人决策，工单给 agent 执行**：plan 不写任务清单，工单不复述整份 plan；工单格式由用户决定。
+- **不编造**：不确定的命令、模块、日期写进 Open Questions，不写成事实。
+
+## 9. 新 feature 流程
+
+1. 确认需求与 slug；在 status 登记，状态 `planned`。
+2. 从 `docs/templates/plan.md` 建 `docs/features/feature-<slug>/plan.md`，写清接口与数据对象。
+3. 人批准 plan（记录日期与批准人），状态改 `in-progress`，在 roadmap 加行。
+4. 从 `docs/templates/feature-spec.md` 建 `.scratch/feature-<slug>-spec.md`。
+5. 在 `.scratch/tickets/` 中由用户自由规划实现工单；确保验收、代码提交、文档更新各自独立成单。
+6. 验收后更新 `spec.md` 的项目级目标/命令/边界（如变化）、`HLD.md`，roadmap/status 改 `done`；需要时归档。
+7. 确认 `.scratch/` 中没有只存在于本地的长期决策。
+
+## 10. 自检
+
+- [ ] 每个事实只有一个所有者，其他位置是指针。
+- [ ] `AGENTS.md` 每个具体路径都存在，行数 ≤ 120。
+- [ ] `docs/spec.md` 九个部分齐全，`Commands` 每行都是完整可执行命令。
+- [ ] roadmap 每行四列，状态只能是 `in-progress | done | archived`，且与 status 一致。
+- [ ] 每个 feature 目录都在 status 中，`plan.md` 有总览/模块依赖图、核心接口与数据对象章节。
+- [ ] 每个 feature 至少有三张独立工单：验收、代码提交、文档更新；实现工单格式不限。
+- [ ] `.scratch/` 未被 Git 跟踪，committed 文档没有指向它的链接。
+- [ ] 所有命令已运行或标注 `Unverified`；模板占位符已替换。

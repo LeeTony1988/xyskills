@@ -1,0 +1,3 @@
+interface:
+  display_name: "Setup AI-First Docs"
+  short_description: "Bootstrap AI-first docs: AGENTS.md, HLD/spec/roadmap, feature plan & scratch tickets"

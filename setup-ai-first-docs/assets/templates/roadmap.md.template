@@ -1,0 +1,24 @@
+# Roadmap — 演进账本
+
+> 记录项目每个功能的演进：时间、功能/文档索引、简介、状态。一条记录对应一个 feature，进行中的记录原地更新，完成后的记录冻结。
+> 只记录**已开工或已完成**的功能；`planned` 功能先在 `features/status.md` 等待，plan 批准后再进入本表。
+> 状态：`in-progress | done | archived`。时间 = 该条最近一次状态变化日期（`YYYY-MM-DD`）。
+
+## 演进账本
+
+| 时间 | 文件索引 | 简介 | 状态 |
+|---|---|---|---|
+<!--
+示例（复制到表体后替换）：
+| 2026-05-01 | [feature-user-login](features/feature-user-login/plan.md) | 邮箱密码登录与会话管理 | in-progress |
+-->
+
+## 读法与维护
+
+- **一条记录一个 feature**：不按工单、不按 commit 拆行。
+- **只记已开工的功能**：`planned` 留在 `features/status.md`；plan 批准、进入实现时在本表加行。
+- **索引指向 plan**：`features/feature-<slug>/plan.md`；归档后若目录移动，同步更新。
+- **简介写交付结果**：用户能获得什么，不写“开发登录模块”。
+- **状态与 `features/status.md` 一致**：两个文件同一功能的状态必须相同。
+- **历史只追加**：`done` / `archived` 行不再改写；需要推翻时新建 feature 并在简介中说明取代关系。
+- 每次更新只改对应行的时间与状态；行内日期即该条最后更新时间，不额外维护顶部日期。
